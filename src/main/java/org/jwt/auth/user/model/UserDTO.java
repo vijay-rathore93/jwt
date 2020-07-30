@@ -10,7 +10,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserRequest {
+public class UserDTO {
     private String userName;
     private String password;
     private String fullName;
