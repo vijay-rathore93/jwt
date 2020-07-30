@@ -2,6 +2,7 @@ package org.jwt.auth.user.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.jwt.auth.user.model.UserDTO;
+import org.jwt.auth.user.model.UserRequestDTO;
 import org.jwt.auth.user.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,12 +12,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
     private UserService userService;
 
     @PostMapping("/user")
-    public ResponseEntity<Void> createUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<Void> createUser(@RequestBody UserRequestDTO userDTO) {
         userService.createUser(userDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
