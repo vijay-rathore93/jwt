@@ -1,4 +1,4 @@
-package org.jwt.auth.utility;
+package org.jwt.auth.user.entity;
 
 public enum ApplicationRoleEnum {
     ROLE_USER,

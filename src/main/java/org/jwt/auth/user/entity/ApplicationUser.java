@@ -18,6 +18,6 @@ public class ApplicationUser extends ApplicationAudit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long applicationUserId;
     private String fullName;
-    private String emailId;
+
     private Long contact;
 }

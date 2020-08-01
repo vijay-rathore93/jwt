@@ -5,6 +5,9 @@ import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.util.StringUtils;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 
@@ -17,7 +20,7 @@ public class CustomTokenProvider {
     @Value("${app.jwtExpirationInMs}")
     private String expirationTime;
 
-    public String generateToke(Authentication authentication) {
+    public String generateToken(Authentication authentication) {
         UserPrincipal userPrinciple = (UserPrincipal) authentication.getPrincipal();
         return Jwts.builder().
                 setSubject(userPrinciple.getName())
@@ -43,5 +46,15 @@ public class CustomTokenProvider {
             log.error("JWT claims string is empty.");
         }
         return false;
+    }
+
+
+    public String getJwtFromRequest(HttpServletRequest request) {
+        String jwtToken=null;
+        String bearerToken = request.getHeader("Authorization");
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+            jwtToken= bearerToken.substring(7, bearerToken.length());
+        }
+        return jwtToken;
     }
 }

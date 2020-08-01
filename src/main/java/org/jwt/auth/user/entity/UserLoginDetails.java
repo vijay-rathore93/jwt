@@ -18,7 +18,9 @@ public class UserLoginDetails {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long userLoginId;
     private String userName;
+    private String emailId;
     private String password;
+    private Boolean isActive;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "applicationUserId")
