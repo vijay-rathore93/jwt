@@ -1,6 +1,5 @@
 package org.jwt.auth.user.controller;
 
-
 import lombok.RequiredArgsConstructor;
 import org.jwt.auth.user.model.RoleRequestDTO;
 import org.jwt.auth.user.service.RoleService;
