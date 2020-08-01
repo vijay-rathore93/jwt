@@ -28,13 +28,12 @@ import java.util.Set;
 public class CustomUserDetailService implements UserDetailsService {
 
     private final UserRepo userRepo;
-    private final CustomTokenProvider customTokenProvider;
-    private final AuthenticationManager authenticationManager;
 
-    @SneakyThrows
+
+
     @Override
     public UserDetails loadUserByUsername(String userNameOrEmail) throws UsernameNotFoundException {
-        UserLoginDetails userLoginDetails = userRepo.findByUserUsernameOrEmailId(userNameOrEmail).
+        UserLoginDetails userLoginDetails = userRepo.findByEmailId(userNameOrEmail).
                 orElseThrow(()->new UsernameNotFoundException("User not found with username or email : " + userNameOrEmail));
         return new CustomUserDetails(userLoginDetails, this.getAuthorities(userLoginDetails.getApplicationRoles()));
     }
@@ -46,8 +45,8 @@ public class CustomUserDetailService implements UserDetailsService {
             return set;
         }).findFirst().get();
     }
-
-    public LoginResponse getToken(LoginRequest loginRequest) {
+//Note : we can'n write like this as it creates cyclic dependancy problem
+    /*public LoginResponse getToken(LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getUserNameOrEmail(),
@@ -57,5 +56,5 @@ public class CustomUserDetailService implements UserDetailsService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         return LoginResponse.builder().accessToken(customTokenProvider.generateToken(authentication)).build();
-    }
+    }*/
 }

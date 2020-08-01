@@ -5,6 +5,7 @@ import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +13,7 @@ import java.util.Date;
 
 
 @Slf4j
+@Component
 public class CustomTokenProvider {
 
     @Value("${app.jwtSecret}")
@@ -56,5 +58,14 @@ public class CustomTokenProvider {
             jwtToken= bearerToken.substring(7, bearerToken.length());
         }
         return jwtToken;
+    }
+
+    public String getUserNameOREmailFromJWTToken(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(secretKey)
+                .parseClaimsJws(token)
+                .getBody();
+
+        return claims.getSubject();
     }
 }

@@ -34,10 +34,10 @@ public class UserService {
     }
 
     public UserDTO getUser(String userId) {
-        return Arrays.asList(userRepo.findByUserId(userId)).stream().map(user -> modelMapper.map(user, UserDTO.class)).findAny().get();
+        return Arrays.asList(userRepo.findByUserName(userId)).stream().map(user -> modelMapper.map(user, UserDTO.class)).findAny().get();
     }
 
     public void deleteUser(String userId) {
-        userRepo.deleteByUserId(userId);
+        userRepo.deleteByUserName(userId);
     }
 }
