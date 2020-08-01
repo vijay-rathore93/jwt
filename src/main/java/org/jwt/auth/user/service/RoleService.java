@@ -12,10 +12,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class RoleService {
     private final RoleRepo roleRepo;
-    private final ModelMapper maodelMapper;
+    private final ModelMapper modelMapper;
 
     public void createRole(RoleRequestDTO roleRequestDTO){
-        ApplicationRole applicationRole=maodelMapper.map(roleRequestDTO, ApplicationRole.class);
+        ApplicationRole applicationRole=modelMapper.map(roleRequestDTO, ApplicationRole.class);
         roleRepo.save(applicationRole);
     }
 
@@ -23,4 +23,7 @@ public class RoleService {
         roleRepo.deleteByRoleName(roleName);
     }
 
+    public RoleRequestDTO getRole(String roleName) {
+       return  modelMapper.map(roleRepo.findByRoleName(roleName),RoleRequestDTO.class);
+    }
 }
