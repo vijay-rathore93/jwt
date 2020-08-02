@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+/*@RequestMapping("/v0")*/
 @RequiredArgsConstructor
 public class UserController {
-    private UserService userService;
+    private final UserService userService;
 
     @PostMapping("/user")
     public ResponseEntity<Void> createUser(@RequestBody  UserRequestDTO userDTO) {

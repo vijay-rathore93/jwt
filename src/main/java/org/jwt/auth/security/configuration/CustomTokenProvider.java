@@ -3,6 +3,7 @@ package org.jwt.auth.security.configuration;
 import com.sun.security.auth.UserPrincipal;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
+import org.jwt.auth.security.model.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -23,11 +24,13 @@ public class CustomTokenProvider {
     private String expirationTime;
 
     public String generateToken(Authentication authentication) {
-        UserPrincipal userPrinciple = (UserPrincipal) authentication.getPrincipal();
+        CustomUserDetails userPrinciple = (CustomUserDetails) authentication.getPrincipal();
+        Date now = new Date();
+        //Date expiryDate = new Date(now.getTime() + expirationTime);
         return Jwts.builder().
-                setSubject(userPrinciple.getName())
+                setSubject(userPrinciple.getUsername())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(expirationTime))
+                //.setExpiration(expiryDate)
                 .signWith(SignatureAlgorithm.HS512, secretKey)
                 .compact();
 

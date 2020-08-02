@@ -17,13 +17,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/auth")
+//@RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
     private final CustomUserDetailService customUserDetailService;
     private final CustomTokenProvider customTokenProvider;
     private final AuthenticationManager authenticationManager;
+
+
 
     @PostMapping("/signIn")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
